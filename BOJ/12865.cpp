@@ -15,8 +15,8 @@ void solution(){
 
     for(int i=1; i<=N; i++){
         for(int j=1; j<=K; j++){
-            if(weight[i] > j) dp[i][j] = dp[i-1][j];
-            else dp[i][j] = max(dp[i-1][j], dp[i-1][j-weight[i]]+value[i]);
+            if(weight[i] > j) dp[i][j] = dp[i-1][j]; // 담을 수 없는 경우
+            else dp[i][j] = max(dp[i-1][j], dp[i-1][j-weight[i]]+value[i]); // 담을 수 있는 경우, 그 가치가 증가할 때 담는다!
         }
     }
     
