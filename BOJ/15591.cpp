@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #define MAX 5001
-#define INF 987654321
+#define INF 1000000001
 using namespace std;
 
 int N, Q;
@@ -18,7 +18,6 @@ void input(){
         path[p].push_back({q, r});
         path[q].push_back({p, r});
     }
-
 }
 
 void init(){
@@ -28,14 +27,14 @@ void init(){
     }
 }
 
-void find_min_val(int node, int now_cost){
+void find_min_val(int node, int min_cost){
     visited[node] = true;
     for(int i=0; i<path[node].size(); i++){
         int next_node = path[node][i].first;
         int next_cost = path[node][i].second;
         if(visited[next_node]) continue;
-        USADO[next_node] = min(min(now_cost, next_cost), USADO[next_node]);
-        find_min_val(next_node, next_cost);
+        USADO[next_node] = min(min(min_cost, next_cost), USADO[next_node]);
+        find_min_val(next_node, USADO[next_node]);
     }
 }
 
