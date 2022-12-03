@@ -21,11 +21,9 @@ void solution(){
     dp[1][1] = sticker[1][1];
     dp[2][1] = sticker[2][1];
 
-    for(int j=1; j<=N; j++){
-        for(int i=1; i<=2; i++){
-            if(i==1) dp[i][j] = max(dp[i+1][j-2], dp[i+1][j-1]) + sticker[i][j];
-            else dp[i][j] = max(dp[i-1][j-2], dp[i-1][j-1]) + sticker[i][j];
-        }
+    for(int j=2; j<=N; j++){
+        dp[1][j] = max(dp[2][j-2], dp[2][j-1]) + sticker[1][j];
+        dp[2][j] = max(dp[1][j-2], dp[1][j-1]) + sticker[2][j];
     }
     cout << max(dp[1][N], dp[2][N]) << "\n";
 }
