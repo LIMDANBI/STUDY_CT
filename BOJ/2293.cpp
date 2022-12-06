@@ -15,7 +15,7 @@ void solution(){ // dp[j] : 가치 j를 만들 수 있는 경우의 수
     for(int i=1; i<=n; i++){
     	if(coin[i] <= k) dp[coin[i]]++;
         for(int j=coin[i]+1; j<=k; j++) dp[j] += dp[j-coin[i]];
-    }
+    } 
     cout << dp[k];
 }
 
