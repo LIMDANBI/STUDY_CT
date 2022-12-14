@@ -11,7 +11,7 @@ int main(){
     cin >> N >> K;
     
     int ans = MAX;// 수빈이가 동생을 찾을 수 있는 가장 빠른 시간
-    for(int i=0; i<=N; i++) visit_time[i] = MAX;
+    for(int i=0; i<MAX; i++) visit_time[i] = MAX;
     
     queue<pair<int, int>> q;
     visit_time[N] = 0;
