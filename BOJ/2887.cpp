@@ -1,11 +1,11 @@
 #include<iostream>
+#include<algorithm>
 #include<vector>
 #include<queue>
 #define MAX 100001
 using namespace std;
 
-struct pos{ int x, y, z;};
-vector<pos> planet;
+vector<pair<int, int>> X, Y, Z;
 
 struct edge{
     int a, b, dist;
@@ -27,16 +27,22 @@ void input(){
     int x, y, z;
     for(int i=0; i<N; i++){
         cin >> x >> y >> z;
-        planet.push_back({x,y,z});
+        X.push_back({x, i});
+        Y.push_back({y, i});
+        Z.push_back({z, i});
     }
 }
 
-void cal_min_dist(){
+void cal_dist(){
+    
+    sort(X.begin(), X.end());
+    sort(Y.begin(), Y.end());
+    sort(Z.begin(), Z.end());
+    
     for(int i=0; i<N-1; i++){
-        for(int j=i+1; j<N; j++){
-            int dist = min(abs(planet[i].x-planet[j].x), min(abs(planet[i].y-planet[j].y), abs(planet[i].z-planet[j].z)));
-            pq.push({i, j, dist});
-        }
+        pq.push({X[i].second, X[i+1].second, X[i+1].first-X[i].first});
+        pq.push({Y[i].second, Y[i+1].second, Y[i+1].first-Y[i].first});
+        pq.push({Z[i].second, Z[i+1].second, Z[i+1].first-Z[i].first});
     }
 }
 
@@ -46,7 +52,7 @@ int find(int x){
 }
 
 void connect(int a, int b){
-    root[find(a)] = b;
+    root[find(a)] = find(b);
 }
 
 void solution(){
@@ -74,6 +80,6 @@ void solution(){
 int main(){
     ios_base::sync_with_stdio(0); cin.tie(0);
     input();
-    cal_min_dist();
+    cal_dist();
     solution();
 }
