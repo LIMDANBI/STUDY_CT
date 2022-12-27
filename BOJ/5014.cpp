@@ -20,7 +20,7 @@ int main(){
         int cnt = q.front().second;
         q.pop();
 
-        if(floor == G) ans = min(ans, cnt); // 눌러야 하는 버튼의 수의 최솟값
+        if(floor == G) ans = cnt; // 눌러야 하는 버튼의 수의 최솟값
         else{
             if(floor+U <= F){ // 범위를 벗어나지 않는 경우 
                 if(!visited[floor+U]){ // 이전에 방문하지 않은 경우
