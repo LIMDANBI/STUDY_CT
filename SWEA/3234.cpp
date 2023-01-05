@@ -8,6 +8,8 @@ int ans;
 int total;
 int weight[MAX];
 bool isuse[MAX];
+int exponential[MAX] = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512};
+int factorial[MAX] = {0, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880};
 
 void init(){
     ans = 0;
@@ -23,12 +25,16 @@ void input(){
     }
 }
 
-// 오른쪽 위에 올라가 있는 무게의 총합이 왼쪽에 올라가 있는 무게의 총합보다 더 커져서는 안 됨
-void dfs(int cnt, int left, int right){ 
+void dfs(int cnt, int left, int right){ // 오른쪽 <= 왼쪽
 
     if(cnt == N){ // 모든 무게추를 올린 경우
         ans++;
         return;
+    }
+
+    if(total-left <= left){ // 추를 올리는 경우의 수 (시간 초과 방지,,)
+        ans += exponential[N-cnt] * factorial[N-cnt];
+        return ;
     }
 
     for(int i=0; i<N; i++){
