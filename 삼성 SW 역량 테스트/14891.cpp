@@ -25,12 +25,11 @@ void solution(){
     int num, dir;
     while(K--){
 
-        // 1. 방향 정하기
+        // 1. 방향 저장
         cin >> num >> dir;
         num--; // start with 0 index
         memset(dirs, 0, sizeof(dirs)); // init
 
-        // 2. 방향 저장
         dirs[num] = dir;
         for(int i=num-1; i>=0; i--) { // 좌측 방향
             if(gear[i][2] == gear[i+1][6]) break; // 서로 맞닿은 톱니의 극이 같은 경우
@@ -43,7 +42,7 @@ void solution(){
             else dirs[i] = -1;
         }
 
-        // 3. 회전
+        // 2. 회전
         for(int i=0; i<MAX; i++){
             if(dirs[i] == 0) continue;
             rotate(i, dirs[i]);
