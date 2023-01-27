@@ -24,14 +24,6 @@ int N, M, D;
 int map[MAX][MAX];
 int copy_map[MAX][MAX];
 
-void print_map() {
-	cout << "\n";
-	for (int i = 0; i < N; i++) {
-		for (int j = 0; j < M; j++) cout << map[i][j] << " ";
-		cout << "\n";
-	} 
-}
-
 void input() {
 	cin >> N >> M >> D;
 	for (int i = 0; i < N; i++) {
