@@ -60,8 +60,6 @@ int attack_enemy(int move) {
 		if (pq.size() == 0) continue;
 		int r = pq.top().r;
 		int c = pq.top().c;
-
-		//cout << r << " " << c << "  is pq top\n";
 		attack_pos.push_back({ r,c });
 	}
 
