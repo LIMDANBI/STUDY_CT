@@ -54,7 +54,7 @@ public class Main {
 	}
 	
 	public static void roate_arr(int r, int c, int s) {
-		int ur = r-s, uc = c-s; // 좌측 상단 좌표
+        int ur = r-s, uc = c-s; // 좌측 상단 좌표
 	    int dr = r+s, dc = c+s; // 우측 하단 좌표
 
 	    while(true){
@@ -81,20 +81,20 @@ public class Main {
 			visited[k] = true; // 사용
 			
 			// save state
-			int[][] copy_arr = new int[N][M];
+            int[][] copy_arr = new int[N][M];
 	        for(int i=0; i<N; i++){
 	            for(int j=0; j<M; j++) copy_arr[i][j] = arr[i][j];
 	        }
 	        
-			roate_arr(cycle[k][0], cycle[k][1], cycle[k][2]); // 회전 연산
-			solution(cnt+1); // 순열 구현
-			
-			visited[k] = false; // 다른 순열에서 사용하기 위해
+            roate_arr(cycle[k][0], cycle[k][1], cycle[k][2]); // 회전 연산
+            solution(cnt+1); // 순열 구현
+
+            visited[k] = false; // 다른 순열에서 사용하기 위해
 			
 			// recovery
 	        for(int i=0; i<N; i++){
 	            for(int j=0; j<M; j++) arr[i][j] = copy_arr[i][j];
-	        }
-		}
+            } 
+        }
 	}
 }
