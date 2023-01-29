@@ -14,7 +14,6 @@ public class Main {
 		StringTokenizer st;
 		
 		N = Integer.parseInt(br.readLine());
-		
 		for(int i=0; i<N; i++) {
 			st = new StringTokenizer(br.readLine());
 			
