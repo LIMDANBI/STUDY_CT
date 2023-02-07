@@ -66,7 +66,8 @@ void make_candidates() {
 						if(--len > 1) to = map[ny][nx]; // 다리의 길이는 2 이상
 						break;
 					}
-				} if (to != 0) pq.push({from, to, len});
+				} 
+				if (to != 0) pq.push({from, to, len});
 			}
 		}
 	}
