@@ -10,25 +10,25 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 		// System.setIn(new FileInputStream("res/input.txt"));
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		N = br.read()-'0';
+		N = br.read()-'0'; // 1 ≤ N ≤ 8 (char to int)
 		
-		for(int start : SingleDigitPrime) solution(start, 1);
+		for(int start : SingleDigitPrime) solution(1, start);
 		System.out.println(sb.toString());
 	}
 
-	static void solution(int num, int cnt) {
+	static void solution(int cnt, int num) {
 		if(!isPrime(num)) return; // 소수가 아닌 경우 
 		if(cnt == N) {
 			sb.append(num).append("\n"); // N자리 신기한 소수
 			return ;
 		}
-		for(int i=1; i<10; i+=2) { // 짝수로 끝나면 소수가 될 수 없음 
-			solution(Integer.parseInt(num+""+i) , cnt+1);
+		for(int i=1; i<10; i+=2) { // 짝수로 끝나면 소수가 될 수 없음 (오름차순으로 정렬해서 한 줄에 하나씩 출력)
+			solution(cnt+1, num*10+i);
 		}
 	}
 
-	static boolean isPrime(int num) {
-		for(int i=2; i*i<=num; i++) {		
+	static boolean isPrime(int num) { // 소수 판별
+		for(int i=2; i*i<=num; i++) {	
 			if(num%i == 0) return false;
 		} return true;
 	}
