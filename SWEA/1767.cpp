@@ -7,19 +7,11 @@ using namespace std;
 struct POS { int y, x; };
 vector<POS> cores;
 
-int te;
 int N, ans;
 int connected;
 bool map[MAX][MAX];
 int dy[] = {-1, 1, 0, 0};
 int dx[] = {0, 0, -1, 1};
-
-void print_map(){
-    for(int y=0; y<N; y++){
-        for(int x=0; x<N; x++) cout << (int)map[y][x] << " ";
-        cout << "\n";
-    }   cout << "\n";
-}
 
 void input(){
     ans = INF; // init
@@ -79,8 +71,7 @@ void solution(int idx, int conn, int sum){ // 최대한 많은 Core에 전원을
         }
     }
 
-    // idx번째 core 미선택 
-    solution(idx+1, conn, sum);
+    solution(idx+1, conn, sum); // idx번째 core 미선택 
 }
 
 int main(){
