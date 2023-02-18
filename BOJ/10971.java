@@ -30,9 +30,9 @@ public class Main {
 	private static void solution(int now, int cnt, int totalCost) {
 		if(cnt == N) {
 			if(cost[now][0] != 0) {
-				ans = Math.min(ans, totalCost+cost[now][0]);
+				ans = Math.min(ans, totalCost+cost[now][0]); // 돌아갈 수 있는 경우 
 			}
-			return ;// 돌아갈 수 있는 경우 
+			return ;
 		}
 		
 		for(int next=1; next<N; next++) {
