@@ -35,7 +35,6 @@ public class Main {
 			if(a==1) update(b, c);
 			else if(a==2) interval_sum(b, (int)c);
 		}
- 
 		System.out.println(sb.toString());
 		br.close();
 	}
