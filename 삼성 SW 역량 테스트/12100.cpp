@@ -124,7 +124,7 @@ void solution(int cnt){
         return;
     }
     for(int i=0; i<4; i++){
-        dir[cnt] = i; // 이동 방향 설정
+        dir[cnt] = i; // 이동 방향 지정
         solution(cnt+1);
     }
 }
