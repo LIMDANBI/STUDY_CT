@@ -13,7 +13,8 @@ void input(){
 
 void solution(){ // 주어진 회전 초밥 벨트에서 먹을 수 있는 초밥의 가짓수의 최댓값
     
-    int ans = 0, kind = 0;
+    int ans = 0, kind = 1; 
+    cnt[c] = 1; // coupon
     
     for(int i=0; i<k; i++){ // 처음 k개 
         if(cnt[sushi[i]] == 0) kind++;
@@ -35,10 +36,7 @@ void solution(){ // 주어진 회전 초밥 벨트에서 먹을 수 있는 초�
         if(cnt[sushi[right]] == 1) kind++; // 종류 한개 증가
 
         // ans update 
-        if(ans <= kind){
-            ans = kind;
-            if(cnt[c]==0) ans++;
-        }
+        ans = max(ans, kind);
     }
     cout << ans;
 }
