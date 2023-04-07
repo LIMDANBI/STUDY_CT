@@ -168,11 +168,11 @@ void solution() {
 	person[1] = { b.y, b.x, false };
 
 	// 2분 ~ M 분
-	for (int m = 2; m <= M; m++) { // base camp 찾기 (2번, ...)
+	for (int m = 2; m <= M; m++) {
 		for (int p = 1; p < m; p++) { // 편의점을 향해 한 칸 움직임
 			if (!person[p].isArrive) go_to_store(p);
 		}
-		b = find_base_camp(m);
+		b = find_base_camp(m);  // base camp 찾기 (2번, ...)
 		person[m] = { b.y, b.x, false };
 	}
 
