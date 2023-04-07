@@ -1,6 +1,7 @@
 // ** 틀린 이유 ** (정확히 1, 2, 3 순서로 진행되어야 함에 유의)
 // 사람이 움직인 후, 다음사람의 베이스 캠프를 찾아줘야 하는데!!
 // 다음 사람의 베이스 캠프를 먼저 찾고,,, 이전 사람들을 움직여서 틀렸었다,,
+// ++ 추가로 도착 편의점 위치 (y, x)를 idx 0부터 사용하기 위해 -1을 해줘야 함!!
 
 #include<iostream>
 #include<cstring>
@@ -23,7 +24,7 @@ struct BASECAMP {
 struct NEXTDIR {
 	int d, dist;
 	bool operator < (const NEXTDIR &n) const {
-		if (dist == n.dist) return d > n.d; // 우선 방향
+		if (dist == n.dist) return d > n.d; // 2. 우선 방향
 		return dist > n.dist; //  1. 짧은 거리
 	}
 };
@@ -57,7 +58,7 @@ void input() {
 	int y, x;
 	for (int p = 1; p <= M; p++) { // p번 사람의
 		cin >> y >> x;
-		store[p] = { y - 1, x - 1 }; // 도착 편의점 정보 저장
+		store[p] = { y - 1, x - 1 }; // 도착 편의점 정보 저장 (idx 0 부터 시작!!!)
 	}
 }
 
