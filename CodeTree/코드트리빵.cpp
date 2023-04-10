@@ -1,7 +1,7 @@
-// ** Æ²¸° ÀÌÀ¯ ** (Á¤È®È÷ 1, 2, 3 ¼ø¼­·Î ÁøÇàµÇ¾î¾ß ÇÔ¿¡ À¯ÀÇ)
-// »ç¶÷ÀÌ ¿òÁ÷ÀÎ ÈÄ, ´ÙÀ½»ç¶÷ÀÇ º£ÀÌ½º Ä·ÇÁ¸¦ Ã£¾ÆÁà¾ß ÇÏ´Âµ¥!!
-// ´ÙÀ½ »ç¶÷ÀÇ º£ÀÌ½º Ä·ÇÁ¸¦ ¸ÕÀú Ã£°í,,, ÀÌÀü »ç¶÷µéÀ» ¿òÁ÷¿©¼­ Æ²·È¾ú´Ù,,
-// ++ Ãß°¡·Î µµÂø ÆíÀÇÁ¡ À§Ä¡ (y, x)¸¦ idx 0ºÎÅÍ »ç¿ëÇÏ±â À§ÇØ -1À» ÇØÁà¾ß ÇÔ!!
+// ** í‹€ë¦° ì´ìœ  ** (ì •í™•íˆ 1, 2, 3 ìˆœì„œë¡œ ì§„í–‰ë˜ì–´ì•¼ í•¨ì— ìœ ì˜)
+// ì‚¬ëŒì´ ì›€ì§ì¸ í›„, ë‹¤ìŒì‚¬ëŒì˜ ë² ì´ìŠ¤ ìº í”„ë¥¼ ì°¾ì•„ì¤˜ì•¼ í•˜ëŠ”ë°!!
+// ë‹¤ìŒ ì‚¬ëŒì˜ ë² ì´ìŠ¤ ìº í”„ë¥¼ ë¨¼ì € ì°¾ê³ ,,, ì´ì „ ì‚¬ëŒë“¤ì„ ì›€ì§ì—¬ì„œ í‹€ë ¸ì—ˆë‹¤,,
+// ++ ì¶”ê°€ë¡œ ë„ì°© í¸ì˜ì  ìœ„ì¹˜ (y, x)ë¥¼ idx 0ë¶€í„° ì‚¬ìš©í•˜ê¸° ìœ„í•´ -1ì„ í•´ì¤˜ì•¼ í•¨!!
 
 #include<iostream>
 #include<cstring>
@@ -15,17 +15,17 @@ struct BASECAMP {
 	int y, x, dist;
 	bool operator < (const BASECAMP &b) const {
 		if (dist == b.dist) {
-			if (y == b.y) return x > b.x; // 3. ÀÛÀº ¿­
-			return y > b.y; // 2. ÀÛÀº Çà
-		} return dist > b.dist; //  1. ÂªÀº °Å¸®
+			if (y == b.y) return x > b.x; // 3. ì‘ì€ ì—´
+			return y > b.y; // 2. ì‘ì€ í–‰
+		} return dist > b.dist; //  1. ì§§ì€ ê±°ë¦¬
 	}
 };
 
 struct NEXTDIR {
 	int d, dist;
 	bool operator < (const NEXTDIR &n) const {
-		if (dist == n.dist) return d > n.d; // 2. ¿ì¼± ¹æÇâ
-		return dist > n.dist; //  1. ÂªÀº °Å¸®
+		if (dist == n.dist) return d > n.d; // 2. ìš°ì„  ë°©í–¥
+		return dist > n.dist; //  1. ì§§ì€ ê±°ë¦¬
 	}
 };
 
@@ -33,15 +33,15 @@ struct POS { int y, x; };
 vector<POS> basecamp, store(MAXM);
 
 struct PERSON {
-	int y, x; // ÇöÀç ÁÂÇ¥
-	bool isArrive; // µµÂø ¿©ºÎ
+	int y, x; // í˜„ì¬ ì¢Œí‘œ
+	bool isArrive; // ë„ì°© ì—¬ë¶€
 };
 vector<PERSON> person(MAXM);
 
 int N, M;
-bool never[MAX][MAX]; // ¾ÕÀ¸·Î Àı´ë Áö³ª°¥ ¼ö ¾ø´Â °÷
-bool visited[MAX][MAX]; // ¸Å¹ø ÃÊ±âÈ­ÇØ¼­ »ç¿ëÇÒ ¹æ¹® Ã¼Å© ¹è¿­
-int dy[] = { -1, 0, 0, 1 }; //  ¡è, ¡ç, ¡æ, ¡é
+bool never[MAX][MAX]; // ì•ìœ¼ë¡œ ì ˆëŒ€ ì§€ë‚˜ê°ˆ ìˆ˜ ì—†ëŠ” ê³³
+bool visited[MAX][MAX]; // ë§¤ë²ˆ ì´ˆê¸°í™”í•´ì„œ ì‚¬ìš©í•  ë°©ë¬¸ ì²´í¬ ë°°ì—´
+int dy[] = { -1, 0, 0, 1 }; //  â†‘, â†, â†’, â†“
 int dx[] = { 0, -1, 1, 0 };
 
 void input() {
@@ -51,22 +51,22 @@ void input() {
 	for (int i = 0; i < N; i++) {
 		for (int j = 0; j < N; j++) {
 			cin >> isBaseCamp;
-			if (isBaseCamp) basecamp.push_back({ i, j }); // º£ÀÌ½º Ä·ÇÁ Á¤º¸ ÀúÀå
+			if (isBaseCamp) basecamp.push_back({ i, j }); // ë² ì´ìŠ¤ ìº í”„ ì •ë³´ ì €ì¥
 		}
 	}
 
 	int y, x;
-	for (int p = 1; p <= M; p++) { // p¹ø »ç¶÷ÀÇ
+	for (int p = 1; p <= M; p++) { // pë²ˆ ì‚¬ëŒì˜
 		cin >> y >> x;
-		store[p] = { y - 1, x - 1 }; // µµÂø ÆíÀÇÁ¡ Á¤º¸ ÀúÀå (idx 0 ºÎÅÍ ½ÃÀÛ!!!)
+		store[p] = { y - 1, x - 1 }; // ë„ì°© í¸ì˜ì  ì •ë³´ ì €ì¥ (idx 0 ë¶€í„° ì‹œì‘!!!)
 	}
 }
 
 BASECAMP find_base_camp(int p) {
 
 	priority_queue<BASECAMP> pq;
-	for (int i = 0; i < (int)basecamp.size(); i++) { // °¢ º£ÀÌ½ºÄ·ÇÁ¿¡¼­ ÇØ´ç ÆíÀÇÁ¡±îÁö BFS
-		if (never[basecamp[i].y][basecamp[i].x]) continue; // ÀÌ¹Ì »ç¿ëÇÑ º£ÀÌ½ºÄ·ÇÁ
+	for (int i = 0; i < (int)basecamp.size(); i++) { // ê° ë² ì´ìŠ¤ìº í”„ì—ì„œ í•´ë‹¹ í¸ì˜ì ê¹Œì§€ BFS
+		if (never[basecamp[i].y][basecamp[i].x]) continue; // ì´ë¯¸ ì‚¬ìš©í•œ ë² ì´ìŠ¤ìº í”„
 
 		memset(visited, false, sizeof(visited)); // init
 
@@ -96,10 +96,10 @@ BASECAMP find_base_camp(int p) {
 		}
 	}
 	never[pq.top().y][pq.top().x] = true;
-	return pq.top(); // ¼±ÅÃµÈ basecamp
+	return pq.top(); // ì„ íƒëœ basecamp
 }
 
-int get_next_dir(int sy, int sx, int ey, int ex) { // Çö À§Ä¡ -> ÆíÀÇÁ¡
+int get_next_dir(int sy, int sx, int ey, int ex) { // í˜„ ìœ„ì¹˜ -> í¸ì˜ì 
 
 	priority_queue<NEXTDIR> pq;
 
@@ -140,10 +140,10 @@ int get_next_dir(int sy, int sx, int ey, int ex) { // Çö À§Ä¡ -> ÆíÀÇÁ¡
 	return pq.top().d;
 }
 
-// p ¹ø »ç¶÷ÀÌ º»ÀÎÀÌ °¡°í ½ÍÀº ÆíÀÇÁ¡ ¹æÇâÀ» ÇâÇØ 1Ä­ ¿òÁ÷ÀÓ
+// p ë²ˆ ì‚¬ëŒì´ ë³¸ì¸ì´ ê°€ê³  ì‹¶ì€ í¸ì˜ì  ë°©í–¥ì„ í–¥í•´ 1ì¹¸ ì›€ì§ì„
 void go_to_store(int p) {
 
-	// ÇöÀç À§Ä¡
+	// í˜„ì¬ ìœ„ì¹˜
 	int y = person[p].y;
 	int x = person[p].x;
 
@@ -155,35 +155,35 @@ void go_to_store(int p) {
 	y += dy[d]; x += dx[d];
 	person[p] = { y, x, false };
 
-	if (y == cy && x == cx) {// ¸ñÇ¥ÇÑ ÆíÀÇÁ¡¿¡ µµÂø 
-		person[p].isArrive = true; // µµÂø ¿©ºÎ true
-		never[store[p].y][store[p].x] = true; // ¾ÕÀ¸·Î ÇØ´ç ÆíÀÇÁ¡ÀÌ ÀÖ´Â Ä­À» Áö³ª°¥ ¼ö ¾øÀ½
+	if (y == cy && x == cx) {// ëª©í‘œí•œ í¸ì˜ì ì— ë„ì°© 
+		person[p].isArrive = true; // ë„ì°© ì—¬ë¶€ true
+		never[store[p].y][store[p].x] = true; // ì•ìœ¼ë¡œ í•´ë‹¹ í¸ì˜ì ì´ ìˆëŠ” ì¹¸ì„ ì§€ë‚˜ê°ˆ ìˆ˜ ì—†ìŒ
 	}
 
 }
 
 void solution() {
 
-	// 1ºĞ¿¡´Â 3¹ø °úÁ¤ºÎÅÍ ÁøÇà
-	BASECAMP b = find_base_camp(1); // 1¹ø »ç¶÷ base camp Ã£±â
+	// 1ë¶„ì—ëŠ” 3ë²ˆ ê³¼ì •ë¶€í„° ì§„í–‰
+	BASECAMP b = find_base_camp(1); // 1ë²ˆ ì‚¬ëŒ base camp ì°¾ê¸°
 	person[1] = { b.y, b.x, false };
 
-	// 2ºĞ ~ M ºĞ
+	// 2ë¶„ ~ M ë¶„
 	for (int m = 2; m <= M; m++) {
-		for (int p = 1; p < m; p++) { // ÆíÀÇÁ¡À» ÇâÇØ ÇÑ Ä­ ¿òÁ÷ÀÓ !!!
+		for (int p = 1; p < m; p++) { // í¸ì˜ì ì„ í–¥í•´ í•œ ì¹¸ ì›€ì§ì„ !!!
 			if (!person[p].isArrive) go_to_store(p);
 		}
-		b = find_base_camp(m);  // base camp Ã£±â (2¹ø, ...)
+		b = find_base_camp(m);  // base camp ì°¾ê¸° (2ë²ˆ, ...)
 		person[m] = { b.y, b.x, false };
 	}
 
 	int ans = M; 
-	while (true) { // MºĞ ÀÌÈÄ
+	while (true) { // Më¶„ ì´í›„
 		bool isEnd = true;
 		for (int p = 1; p <= M; p++) {
-			if (person[p].isArrive) continue; // ÀÌ¹Ì µµÂøÇÑ °æ¿ì
+			if (person[p].isArrive) continue; // ì´ë¯¸ ë„ì°©í•œ ê²½ìš°
 			isEnd = false;
-			go_to_store(p); // ÆíÀÇÁ¡À» ÇâÇØ ÇÑ Ä­ ¿òÁ÷ÀÓ
+			go_to_store(p); // í¸ì˜ì ì„ í–¥í•´ í•œ ì¹¸ ì›€ì§ì„
 		}
 		if (isEnd) break;
 		ans++;
