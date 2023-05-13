@@ -7,7 +7,7 @@ int N, ans = 0;
 int map[MAX][MAX];
 int dy[] = {-1, 1, 0, 0};
 int dx[] = {0, 0, -1, 1};
-vector<pair<int, int> > warmhall[11];
+vector<pair<int, int> > wormhole[11];
 
 int NDIR[6][4] = { // (블록 번호, 현재 방향) 일 때 다음 방향
     {0, 0, 0, 0},
@@ -20,7 +20,7 @@ int NDIR[6][4] = { // (블록 번호, 현재 방향) 일 때 다음 방향
 
 void init(){
     ans = 0;
-    for (int i = 6; i < 11; i++) warmhall[i].clear();
+    for (int i = 6; i < 11; i++) wormhole[i].clear();
 }
 
 void input(){
@@ -29,7 +29,7 @@ void input(){
         for (int j = 0; j < N; j++){
             cin >> map[i][j];
             if(map[i][j]==0 || map[i][j]==-1) continue;
-            warmhall[map[i][j]].push_back({i, j});
+            wormhole[map[i][j]].push_back({i, j});
         }
     }
 }
@@ -52,13 +52,13 @@ int get_score(int y, int x, int d){
         }
         else{ // 웜홀인 경우
             int num = map[y][x]; // 웜홀 번호
-            if(y==warmhall[num][0].first && x==warmhall[num][0].second) {
-                y = warmhall[num][1].first;
-                x = warmhall[num][1].second;
+            if(y==wormhole[num][0].first && x==wormhole[num][0].second) {
+                y = wormhole[num][1].first;
+                x = wormhole[num][1].second;
             }
             else{
-                y = warmhall[num][0].first;
-                x = warmhall[num][0].second;
+                y = wormhole[num][0].first;
+                x = wormhole[num][0].second;
             }
         }
     }
