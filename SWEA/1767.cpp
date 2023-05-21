@@ -1,86 +1,84 @@
 #include<iostream>
 #include<vector>
-#define INF 1000000001
-#define MAX 13
+#define MAX 12
 using namespace std;
 
-struct POS { int y, x; };
-vector<POS> cores;
-
-int N, ans;
-int connected;
+int N;
 bool map[MAX][MAX];
+vector<pair<int, int>> cores;
+int sumOfLine, connCore, maxCore;
+
 int dy[] = {-1, 1, 0, 0};
 int dx[] = {0, 0, -1, 1};
 
-void input(){
-    ans = INF; // init
-    connected=0;
+void init(){
+    maxCore = 0;  // 전선 길의 합
+    connCore = 0; // 연결된 core
+    sumOfLine = 0; // 최대 연결 가능한 core
     cores.clear();
-
-    cin >> N;
-    for(int y=0; y<N; y++){
-        for(int x=0; x<N; x++){
-            cin >> map[y][x];
-            if(map[y][x]) {
-                if(y!=0 && y!=N-1 && x!=0 && x!=N-1) cores.push_back({y, x});
-                else connected++; // 이미 전원이 연결된 것
-            }
-        }
-    }
 }
 
-void solution(int idx, int conn, int sum){ // 최대한 많은 Core에 전원을 연결하였을 경우, 전선 길이의 합
-    
-    if(connected <= conn){ // 최대한 많은 Core에 전원을 연결
-        if(connected == conn) ans = min(ans, sum); // 여러 방법이 있을 경우, 전선 길이의 합이 최소가 되는 값
-        else {
-            ans = sum;
-            connected = conn;
+void input(){
+    cin >> N;
+    for (int i = 0; i < N; i++){
+        for (int j = 0; j < N; j++){
+            cin >> map[i][j];
+            if(map[i][j]){ // core인 경우
+                if(i==0 || i==N-1 || j==0 || j==N-1) connCore++;
+                else cores.push_back({i, j});
+            }
         }
+    } maxCore = connCore;
+}
+
+void solution(int cnt, int core, int len){
+    if(cnt == cores.size()){
+        if(core == maxCore) sumOfLine = min(sumOfLine, len);
+        else if(maxCore < core){
+            maxCore = core;
+            sumOfLine = len;
+        }
+        return ;
     }
 
-    if(idx>=cores.size()) return; // end
+    // 미연결
+    solution(cnt + 1, core, len);
 
-    int y = cores[idx].y; // idx번째 core 선택
-    int x = cores[idx].x;
+    // 연결 (가능한 경우 - 상,하,좌,우)
+    for (int d = 0; d < 4; d++){
 
-    for(int d=0; d<4; d++){ // 4가지 방향 (전선은 직선으로만 설치가 가능)
+        int l = 0;
+        bool flag = true;
 
-        int len=0, ny=y, nx=x;
+        int y = cores[cnt].first;
+        int x = cores[cnt].second;
 
-        while(1){
-            ny+=dy[d]; nx+=dx[d]; len++;
-            if(ny<0 || ny>=N || nx<0 || nx>=N) break; // 범위를 벗어나는 경우 
-            if(map[ny][nx]) {len = 0; break;} // 설치가 불가능한 경우
+        while(true){
+            y += dy[d];
+            x += dx[d];
+            if(y<0 || y>=N || x<0 || x>=N) break;
+            if(map[y][x]) {flag=false; break;}
+            map[y][x] = true; l++;
         }
 
-        if(len == 0) continue; // 불가능한 경우
+        if(flag) solution(cnt + 1, core + 1, len + l);
 
-        ny=y; nx=x; len--;
-        for(int i=0; i<len; i++){ // 전선 설치
-            ny+=dy[d]; nx+=dx[d];
-            map[ny][nx] = true;
-        }
-
-        solution(idx+1, conn+1, sum+len);
-
-        for(int i=0; i<len; i++){ // 전선 해제
-            map[ny][nx] = false;
-            ny-=dy[d]; nx-=dx[d];
+        // 복구 
+        while(l--){
+            y -= dy[d];
+            x -= dx[d];
+            map[y][x] = false;
         }
     }
-
-    solution(idx+1, conn, sum); // idx번째 core 미선택 
 }
 
 int main(){
     ios_base::sync_with_stdio(0); cin.tie(0);
-
     int T; cin >> T;
-    for(int t=1; t<=T; t++){
+    for (int t = 1; t <= T; t++){
+        init();
         input();
-        solution(0, connected, 0);
-        cout << "#" << t << " " << ans << "\n"; // output
+        solution(0, connCore, 0);
+        cout << "#" << t << " " << sumOfLine << "\n";
     }
 }
