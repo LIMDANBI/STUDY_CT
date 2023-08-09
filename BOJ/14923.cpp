@@ -5,7 +5,6 @@ using namespace std;
 
 struct DATA{int y, x, chance, movecnt;};
 
-
 int N, M;
 int hy, hx, ey, ex;
 bool maze[MAX][MAX];
