@@ -63,16 +63,12 @@ void move(){
             int nc = c+dc[d];
             int new_dist = abs(nr-er) + abs(nc-ec);
             if(nr<1 || nr>N || nc<1 || nc>N) continue;
-            if(new_dist < dist && map[nr][nc]==0) {
-                // cout  << nr << " " << nc << " " << new_dist << " " << d << " nr nc nd d \n";
-                pq.push({new_dist, d});
-            }
+            if(new_dist < dist && map[nr][nc]==0) pq.push({new_dist, d});
         }
 
         if(!pq.empty()){ // 움직이는 경우
             moveCnt++;
             int d = pq.top().second; 
-            // cout << d << " is d \n";
             runners[i] = {r+dr[d], c+dc[d], false};
             if(runners[i].r == er && runners[i].c == ec) {
                 runners[i].isEixt = true;
@@ -112,7 +108,6 @@ void rotate(){ // 참가자 최소 1명을 포함한 가장 작은 정사각형�
                             map[r+y][c+x] = tmp[y][x];
                         } 
                     } 
-                    // print_map(); exit(0);
                     
                     // 출구 (er, ec) 변경
                     int y = er - r;
