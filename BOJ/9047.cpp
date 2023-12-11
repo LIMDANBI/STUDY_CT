@@ -1,34 +1,32 @@
 #include <iostream>
 #include <algorithm>
-#include <vector>
-#include <string>
 #define SIZE 4
 using namespace std;
 
-int main(){
-    int TC; cin >> TC;
-    while(TC--){
-        string N; cin >> N;
-        int ans = 0, maxVal, minVal, diff = stoi(N);
-        
-        while (diff != 6174){
-            vector<char> v;
-            string minStr="", maxStr="";
+int TC, N;
 
-            for(char c : N) v.push_back(c);
-            sort(v.begin(), v.end());
-            for(int i=0; i<SIZE; i++){
-                minStr = minStr + v[i];
-                maxStr = maxStr + v[SIZE-i-1];
-            }
-            minVal = stoi(minStr);
-            maxVal = stoi(maxStr);
-            diff = maxVal - minVal;
-            N = to_string(diff);
-            while(N.size() < SIZE) N = "0" + N;
-            
+int kaprekar(int num){
+    int arr[SIZE];
+
+    for (int i = 0; i < SIZE; i++){
+        arr[i] = num % 10;
+        num /= 10;
+    }
+    sort(arr, arr + SIZE);
+    return (arr[3]*1000 + arr[2]*100 + arr[1]*10 + arr[0]) - (arr[0]*1000 + arr[1]*100 + arr[2]*10 + arr[3]);
+}
+
+int main(){
+    cin >> TC;
+    while(TC--){
+        cin >> N;
+
+        int ans=0, num = N;
+        while (num != 6174){
+            num = kaprekar(num);
             ans++;
         }
+
         cout << ans << "\n";
     }
 }
