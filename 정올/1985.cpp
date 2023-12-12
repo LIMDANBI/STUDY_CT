@@ -4,15 +4,15 @@
 using namespace std;
 
 int N;
-vector<pair<double, pair<int, int> > > fraction;
+vector<pair<int, pair<int, int> > > fraction;
 
 void input(){
     cin >> N;
 }
 
 void solution(){
-    for(int parent=2; parent<=N; parent++){
-        for(int child=1; child<parent; child++){
+    for(int parent=2; parent<=N; parent++){ // 분모
+        for(int child=1; child<parent; child++){ // 분자
             fraction.push_back({child*100000/parent, {child, parent}});
         }
     }
