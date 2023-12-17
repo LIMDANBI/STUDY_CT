@@ -13,13 +13,13 @@ void input() {
 }
 
 void solution(){
-    stack<pair<int, int> > st; // idx, high
+    stack<int> st; // idx
     for (int idx = 1; idx <= N; idx++){
-        while (!st.empty() && st.top().second < H[idx]){
-            sol[st.top().first] = idx;
+        while (!st.empty() && H[st.top()] < H[idx]){
+            sol[st.top()] = idx;
             st.pop();
         }
-        st.push({idx, H[idx]});
+        st.push(idx);
     }
 }
 
