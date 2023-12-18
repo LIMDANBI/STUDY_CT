@@ -27,9 +27,14 @@ void output(){
         cout << A[i] << " ";
 }
 
+int comp(const void *a, const void *b){
+    return *(int *)a - *(int *)b;
+}
+
 int main(){
     ios_base::sync_with_stdio(0); cin.tie(0);
     input();
-    solve();
+    // solve();
+    qsort(A, N, sizeof(A[0]), comp);
     output();
 }
