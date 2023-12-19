@@ -3,7 +3,7 @@
 using namespace std;
 
 int N, ni;
-priority_queue<int, vector<int>, greater<int>> pq;
+priority_queue<int, vector<int>, greater<int>> pq; // 22ms
 
 void input(){
     cin >> N;
@@ -32,3 +32,7 @@ int main(){
     input();
     solve();
 }
+
+// qsort (stdlib.h) // 390ms
+// sort(candy+i, candy+N); // 179ms 
+// simple sort : 52ms
