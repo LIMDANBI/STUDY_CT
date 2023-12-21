@@ -1,18 +1,19 @@
 #include<iostream>
-#include<string>
 using namespace std;
 
-string solve(int M){
-    
-    string str = to_string(M), reverse="";
-    for(int i = str.size()-1; i>=0; i--) reverse += str[i];
-
-    int sum = M + stoi(reverse);
-    str = to_string(sum);
-    for(int i=0; i<str.size()/2; i++){
-        if(str[i]!=str[str.size()-1-i]) return "NO";
+int reverse(int num){ // 1 ≦ num ≦ 1,000,000
+    int res = 0;
+    while(num){
+        res = res*10 + num%10;
+        num/=10;
     }
-    return "YES";
+    return res;
+}
+
+void solve(int num){
+    int sum = num + reverse(num);
+    if(sum == reverse(sum)) cout << "YES\n";
+    else cout << "NO\n";
 }
 
 int main(){
@@ -20,6 +21,6 @@ int main(){
     int N, M; cin >> N;
     while(N--){
         cin >> M;
-        cout << solve(M) << "\n";
+        solve(M);
     }
 }
