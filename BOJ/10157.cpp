@@ -17,7 +17,7 @@ pii solve(){
 
     int c = 1, r = 0;
     int ccnt = 0, rcnt = -1, order = 1;
-    for (int d = 0; C - ccnt > 1; d++){
+    for (int d = 0; ; d++){
         d %= 4;            // 상우하좌 반복
         if(d==0 || d==2){  // 상하, r축
             rcnt++;
