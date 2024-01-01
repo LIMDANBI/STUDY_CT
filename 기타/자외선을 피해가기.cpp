@@ -5,8 +5,8 @@
 using namespace std;
 
 int N;
-int map[MAX][MAX];
 int cost[MAX][MAX];
+int accum[MAX][MAX];
 int dy[] = {-1, 1, 0, 0};
 int dx[] = {0, 0, -1, 1};
 
@@ -15,15 +15,15 @@ void input(){
     for (int i = 1; i <= N; i++){
         for (int j = 1; j <= N; j++){
             char c; cin >> c;
-            map[i][j] = c - '0';
-            cost[i][j] = INF; // init
+            cost[i][j] = c - '0';
+            accum[i][j] = INF; // init
         }
     }
 }
 
 void solve(){
     queue<pair<int, int>> q;
-    cost[1][1] = 0;
+    accum[1][1] = 0;
     q.push({1, 1});
 
     while (!q.empty()) {
@@ -35,13 +35,13 @@ void solve(){
             int ny = y + dy[d];
             int nx = x + dx[d];
             if(ny<1 || ny>N || nx<1 || nx>N) continue;
-            if(cost[y][x] + map[ny][nx] < cost[ny][nx]){
-                cost[ny][nx] = cost[y][x] + map[ny][nx];
+            if(accum[y][x] + cost[ny][nx] < accum[ny][nx]){
+                accum[ny][nx] = accum[y][x] + cost[ny][nx];
                 q.push({ny, nx});
             }
         }
     }
-    cout << cost[N][N];
+    cout << accum[N][N];
 }
 
 int main(){
