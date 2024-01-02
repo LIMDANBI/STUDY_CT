@@ -19,7 +19,7 @@ void solve(int cnt, int sum){ // 각 빌딩을 어느 장소에 세우면 비용
         ans = min(ans, sum);
         return;
     }
-    for(int idx=1; idx<=N; idx++){
+    for(int idx=0; idx<N; idx++){
         if(visited[idx]) continue;
         visited[idx] = true;
         solve(cnt+1, sum+cost[cnt][idx]);
