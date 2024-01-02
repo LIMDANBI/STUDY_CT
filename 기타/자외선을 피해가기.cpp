@@ -1,7 +1,7 @@
 #include<iostream>
 #include<queue>
 #define MAX 105
-#define INF 10001
+#define INF 100001
 using namespace std;
 
 int N;
