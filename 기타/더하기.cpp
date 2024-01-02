@@ -6,32 +6,29 @@ int N, K;
 int num[MAX];
 int psum[MAX]; // 구간합
 bool used[MAX];
-bool isPossible;
 
 void input(){
     cin >> N >> K;
-    isPossible = false; // init
-    for(int i=0; i<N; i++) {
+    for(int i=1; i<=N; i++) {
         cin >> num[i];
-        if(i==0) psum[i] = num[i]; 
-        else psum[i] = psum[i-1] + num[i];
+        psum[i] = psum[i-1] + num[i];
     }
 }
 
-void check(int cnt, int sum){
-    if(sum == K) isPossible = true;
-    if(isPossible || cnt == N || sum+psum[N-1]-psum[cnt-1] < K) return; // 이미 만들어진 경우, 모든 수를 본 경우, 남은 수를 다 더해도 만들 수 없는 경우!!
+bool check(int cnt, int sum){
+    if(sum == K) return true;
+    if(cnt == N+1 || sum > K || sum+psum[N]-psum[cnt-1] < K) return false; // backtracking
 
-    check(cnt+1, sum); // 해당 수를 더하지 않아봄
-    check(cnt+1, sum+num[cnt]); // 해당 수를 더해봄
+    if(check(cnt+1, sum)) return true; // 해당 수를 더하지 않아봄
+    if(check(cnt+1, sum+num[cnt])) return true; // 해당 수를 더해봄
+    return false;
 }
 
 void solve(){
     int T; cin >> T;
     while(T--){
         input();
-        check(0, 0);
-        isPossible ? cout << "YES\n" : cout << "NO\n";
+        check(1, 0) ? cout << "YES\n" : cout << "NO\n";
     }
 }
 
