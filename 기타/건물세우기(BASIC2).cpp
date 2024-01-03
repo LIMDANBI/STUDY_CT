@@ -14,9 +14,9 @@ void input(){
 }
 
 void solve(int cnt, int sum){ // 각 빌딩을 어느 장소에 세우면 비용의 합이 최소가 되는지
-    if(ans < sum) return;
+    if(ans <= sum) return;
     if(cnt == N){
-        ans = min(ans, sum);
+        ans = sum; // 위에서 이미 skip 함
         return;
     }
     for(int idx=0; idx<N; idx++){
