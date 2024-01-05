@@ -2,45 +2,42 @@
 #include<deque>
 using namespace std;
 
-deque<char> dq;
-int bombstrSize;
+deque<char> s1, s2;
 string str, bombstr;
 
 void input(){
     cin >> str >> bombstr;
-    bombstrSize = bombstr.size();
 }
 
 void solve(){
-    deque<char> tmp;
     for (int i = 0; i < str.size(); i++){
-        dq.push_front(str[i]);
-        if(bombstrSize <= dq.size() && dq.front() == bombstr[bombstrSize-1]){
+        s1.push_back(str[i]);
+        if(bombstr.size() <= s1.size()){
             bool ismatch = true;
-            for (int j = bombstrSize - 1; j >= 0; j--){
-                if(dq.front() == bombstr[j]){
-                    tmp.push_front(dq.front());
-                    dq.pop_front();
+            for (int j = bombstr.size() - 1; j >= 0; j--){
+                if(s1.back() == bombstr[j]){
+                    s2.push_back(s1.back());
+                    s1.pop_back();
                 }
                 else{
                     ismatch = false;
-                    while (!tmp.empty()){
-                        dq.push_front(tmp.front());
-                        tmp.pop_front();
+                    while (!s2.empty()){
+                        s1.push_back(s2.back());
+                        s2.pop_back();
                     }
                     break;
                 }
             }
-            while(ismatch && !tmp.empty()) tmp.pop_front();
+            while (ismatch && !s2.empty()) s2.pop_back();
         }
     }
 }
 
 void output(){
     string res = "";
-    while (!dq.empty()){
-        res += dq.back();
-        dq.pop_back();
+    while (!s1.empty()){
+        res += s1.front();
+        s1.pop_front();
     }
     res == "" ? cout << "FRULA" : cout << res;
 }
