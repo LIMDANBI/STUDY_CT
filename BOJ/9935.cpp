@@ -42,7 +42,7 @@ void output(){
         res += dq.back();
         dq.pop_back();
     }
-    res == bombstr ? cout << "FRULA" : cout << res;
+    res == "" ? cout << "FRULA" : cout << res;
 }
 
 int main(){
