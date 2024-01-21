@@ -70,7 +70,6 @@ int main(){
     eratosthenes(); // 에라토스테네스의 체
     while(T--){
         cin >> s >> e;
-        int_to_arr(s);
         ans = bfs(s, e);
         if(ans == -1) cout << "Impossible\n";
         else cout << ans << "\n";
