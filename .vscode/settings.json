@@ -69,6 +69,12 @@
     "map": "cpp",
     "set": "cpp",
     "__verbose_abort": "cpp",
-    "bit": "cpp"
+    "bit": "cpp",
+    "xiosbase": "cpp",
+    "xutility": "cpp",
+    "xlocale": "cpp",
+    "xlocmon": "cpp",
+    "xlocnum": "cpp",
+    "xloctime": "cpp"
   }
 }
