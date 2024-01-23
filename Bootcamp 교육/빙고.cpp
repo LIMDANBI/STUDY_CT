@@ -4,9 +4,7 @@ using namespace std;
 
 struct POS { int r, c; };
 POS pos[SIZE * SIZE + 5];
-
 int map[SIZE][SIZE];
-bool check[SIZE][SIZE];
 
 void input() {
 	for (int i = 0; i < SIZE; i++) {
