@@ -18,13 +18,13 @@ void input(void) {
 }
 
 int find(int start) {
-	int tmp[MAXV];
+	int tmp[MAXV]; // 부분 코드
 	for (int i = 0; i < M; i++) tmp[i] = code[start+i];
-    sort(tmp, tmp+M);
+    sort(tmp, tmp+M); // 쉬운 비교를 위해 코드를 정렬
 
     int isvirus = 1;
     int diff = virus[0] - tmp[0];
-	for (int i = 0; i < M; i++){
+	for (int i = 0; i < M; i++){ // 정렬된 부분 코드 비교 (차이가 같은 경우 바이러스)
         if(virus[i]-tmp[i] != diff) isvirus = false;   
     }
 	return isvirus;
