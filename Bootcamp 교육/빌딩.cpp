@@ -1,26 +1,37 @@
 #include<iostream>
+#define MAX 10
 using namespace std;
 
 int N;
+int nums[MAX];
 
 void input() {
 	cin >> N;
 }
 
-bool includeFour(int n) {
+int change(int n) { // 4보다 큰 수 - 1
+	int res = 0, idx = 0, r;
 	while (n) {
-		if (n % 10 == 4) return true;
+		r = n % 10;
 		n /= 10;
+		if (r >= 4) nums[idx++] = r-1;
+		else nums[idx++] = r;
 	}
-	return false;
+	return idx;
+}
+
+int changeDigit(int idx) { // 9 -> 10 진법
+	int ans = 0, n = 1;
+	for (int i = 0; i <= idx; i++) {
+		ans += (nums[i] * n);
+		n *= 9;
+	}
+	return ans;
 }
 
 void solve() { // 실제 층 수를 출력
-	int ans = N;
-	for (int n = 1; n <= N; n++) {
-		if (includeFour(n)) ans--;
-	}
-	cout << ans;
+	int idx = change(N);
+	cout << changeDigit(idx);
 }
 
 int main() {
