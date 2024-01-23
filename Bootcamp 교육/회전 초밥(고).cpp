@@ -29,15 +29,14 @@ void solve() { // 주어진 회전 초밥 벨트에서 먹을 수 있는 초밥�
 
     // 2. 슬라이딩 윈도우 + 투 포인터 (k...N 부터 k개)
     int l = 0, r = k;
-    for (int i = k; i < N + k; i++) {
+    for (int i = 0; i < N; i++) {
 
-        if (--cnt[sushi[l]] == 0) sum--; // left
-        if (cnt[sushi[r]]++ == 0) sum++; // right
+        if (--cnt[sushi[l++]] == 0) sum--; // left
+        if (cnt[sushi[r++]]++ == 0) sum++; // right
 
         // 값 갱신
         ans = max(ans, sum);
-        l = (l + 1) % N;
-        r = (r + 1) % N;
+        if(r > N) r = 0;
     }
     cout << ans;
 }
