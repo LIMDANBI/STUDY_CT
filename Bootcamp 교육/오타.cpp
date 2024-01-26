@@ -20,9 +20,8 @@ int solve(){
             lev--;
             close++;
         }
-
-        if(lev == 1) open =0;
-        if(lev  < 0) return close;
+        if(lev == 1) open = 0;
+        if(lev < 0) return close;
     }
     return open;
 }
