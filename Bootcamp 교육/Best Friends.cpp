@@ -27,7 +27,7 @@ void solve(){
     int r = K+1; 
     for(int l=0; l<N; l++){
         ans += (cnt[len[l]]-1); // 본인과 이름 길이가 같은 학생 수
-        cnt[len[l]]--;
+        cnt[len[l]]--; // 다음 학생을 봄
         if(r < N) cnt[len[r++]]++; // 학생이 더 있는 경우
     }
 
