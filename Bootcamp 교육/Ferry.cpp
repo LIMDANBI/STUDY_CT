@@ -17,7 +17,7 @@ void input(){
     }
 }
 
-int ride(int nd, int nt){
+void ride(int nd, int nt){
     int cnt = 0;
     while(cnt<M && !q[nd].empty()){ // 태울 수 있는 승객들을 태움
         int idx = q[nd].front();
@@ -26,7 +26,6 @@ int ride(int nd, int nt){
         q[nd].pop();
         cnt++;
     }
-    return cnt;
 }
 
 void move(int *nd, int *nt){
