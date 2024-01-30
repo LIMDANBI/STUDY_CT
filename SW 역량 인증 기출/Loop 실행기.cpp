@@ -2,41 +2,41 @@
 #include<string>
 using namespace std;
 
-void print_loop(int cnt, string loop) {
+void print_loop(string loop){ // Loop문 작업 실행 순서 출력
 
-    //cout << cnt << " " << loop << " print_loop\n";
-    for (int c = 0; c < cnt; c++) {
-        string cumul = "";
-        int idx = 0, size = loop.size();
-        while (idx < size) {
-            if (loop[idx] == '<') { // 1. loop가 시작하는 경우
+    int cnt = loop[1] - '0'; // 반복 횟수
+    int size = (int)loop.size();
+    
+    for (int c = 0; c < cnt; c++){
+        int idx = 2;
+        string str = "";
+        while(idx < size){
+            if(loop[idx] == '<'){ // 중첩 loop가 시작되는 경우
+                // 이전까지 출력 처리
+                cout << str;
+                str = "";
 
-                cout << cumul;
-                cumul = "";
-
-                int len = 1, cnt = loop[idx + 1] - '0';
-                for (int i = idx + 1; i < size; i++) {
-                    len++;
-                    if (loop[i] == '>') break;
-                }
-                print_loop(cnt, loop.substr(idx + 2, len));
+                // 중첩 loop
+                int len = 0;
+                while(loop[idx + len] != '>') len++;
+                print_loop(loop.substr(idx, len));
                 idx += len;
             }
-            else if (loop[idx] == '>') { // 2. loop가 끝나는 경우
-                cout << cumul;
-                cumul = "";
-                idx++;
-            }
-            else cumul += loop[idx++]; // 3. 반복 출력할 문자열인 경우
+            else if(loop[idx]!='>') str += loop[idx];
+            idx++;
         }
+        cout << str;
     }
 }
 
-void solve() { // Loop문 작업 실행 순서를 출력
-    string loop; cin >> loop;
-    int cnt = loop[1] - '0';
-    loop = loop.substr(2);
-    print_loop(cnt, loop);
+void solve() {
+
+    // 1. 입력
+    string loop;
+    cin >> loop;
+
+    // 2. Loop문 작업 실행 순서 출력
+    print_loop(loop);
 }
 
 int main() {
