@@ -23,7 +23,7 @@ bool check(int val, int chance){
 }
 
 void solve(){ // 철수가 설정 가능 한 K의 최소값
-    int low=0, mid, high=MAX;
+    int low=0, mid, high=MAX*MAX;
     while (low <= high){
         mid = (low+high)/2;
         if(check(mid, M)) high = mid-1;
