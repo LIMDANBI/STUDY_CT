@@ -1,5 +1,6 @@
 #include<iostream>
 #define MAX 100005
+#define INF 1000000001
 using namespace std;
 
 int N, M; // N일 동안 M번 인출
@@ -23,7 +24,7 @@ bool check(int val, int chance){
 }
 
 void solve(){ // 철수가 설정 가능 한 K의 최소값
-    int low=0, mid, high=MAX*MAX;
+    int low=0, mid, high=INF;
     while (low <= high){
         mid = (low+high)/2;
         if(check(mid, M)) high = mid-1;
