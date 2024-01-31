@@ -42,7 +42,7 @@ bool dfs(int y, int x, bool issave){
     bool res = true;
 
     // 1. 중력이 작용할 수 없는 경우
-    if(y == R-1) return false;
+    if(y == R-1) res = false;
 
     // 2. 방문
     visited[y][x] = true;
