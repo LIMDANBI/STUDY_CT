@@ -5,135 +5,145 @@
 #define MAX 101
 using namespace std;
 
-priority_queue<pair<int, int> > tmp_move, need_move;
+struct POS{int y, x;};
+vector<POS> cluster;
 
 int R, C, N;
-bool map[MAX][MAX];
-bool tmpMap[MAX][MAX];
+char map[MAX][MAX];
 bool visited[MAX][MAX];
 int dy[] = {-1, 1, 0, 0};
 int dx[] = {0, 0, -1, 1};
 
 void input(){
     cin >> R >> C;
-
-    char c;
-    for (int i = 1; i <= R; i++){
-        for (int j = 1; j <= C; j++) {
-            cin >> c;
-            if(c == 'x') map[i][j] = true;
-        }
+    for (int i = 0; i < R; i++){
+        for (int j = 0; j < C; j++)
+            cin >> map[i][j];
     }
+    cin >> N;
 }
 
-int find_col(int dir, int row){
-    if (dir%2 == 1) { // left to right
-        int col = 0;
-        while(++col <= C){
-            if(map[row][col]) return col;
-        }
+void throwStick(int y, int d){
+    int x;
+    if(d == 0){ // 왼쪽에서 던짐 (창영)
+        x = 0;
+        while(x<C && map[y][x]!='x') x++;
     }
-    else{ // right to left
-        int col = C+1;
-        while(--col >= 1){
-            if(map[row][col]) return col;
-        }
+    else{ // 오른쪽에서 던짐 (상근)
+        x = C - 1;
+        while(x>=0 && map[y][x]!='x') x--;
     }
-    return -1;
+
+    // 미네랄 파괴
+    if(0<=x && x<C) map[y][x] = '.';
 }
 
-void find_clust_and_point(int y, int x){
+bool dfs(int y, int x, bool issave){
+
+    bool res = true;
+
+    // 1. 중력이 작용할 수 없는 경우
+    if(y == R-1) return false;
+
+    // 2. 방문
     visited[y][x] = true;
-    tmp_move.push({y,x});
+    if(issave) cluster.push_back({y, x});
+    
+    // 3. 다음 방문점 찾기
     for (int d = 0; d < 4; d++){
         int ny = y + dy[d];
         int nx = x + dx[d];
-        if(ny<1 || ny>R || nx<1 || nx>C) continue;
-        if(visited[ny][nx] || !map[ny][nx]) continue;
-        find_clust_and_point(ny, nx);
+        if (ny<0 || ny>=R || nx<0 || nx>=C) continue;
+        if(map[ny][nx]!='x' || visited[ny][nx]) continue;
+        if(!dfs(ny, nx, issave)) res = false;
     }
+
+    return res;
 }
 
-int get_need_cnt(){
-    int min_cnt = R - tmp_move.top().first;
+bool findCluster(){
 
-    while(!tmp_move.empty()){
-        int r = tmp_move.top().first;
-        int c = tmp_move.top().second;
-        need_move.push(tmp_move.top());
-        tmp_move.pop();
+    bool res = false;
 
-        int cnt = 0;
-        while(++r<=R){
-            if(map[r][c] && !visited[r][c]) {
-                min_cnt = min(min_cnt, cnt);
+    // 1. 초기화
+    cluster.clear();
+    memset(visited, false, sizeof(visited));
+
+    // 2. 중력이 작용할 클러스터를 찾음
+    int y, x;
+    for (int i = 0; i < R && !res; i++){
+        for (int j = 0; j < C; j++){
+            if(map[i][j]!='x' || visited[i][j]) continue;
+            if(dfs(i, j, false)) {
+                y = i; x = j;
+                res = true;
                 break;
             }
-            cnt++;
         }
     }
-    return min_cnt;
+
+    // 3. 중력이 작용할 클러스터의 위치 저장
+    if(res) {
+        memset(visited, false, sizeof(visited));
+        dfs(y, x, true);
+    }
+
+    return res;
 }
 
-void gravity(int r, int c){
-    memset(visited, false, sizeof(visited)); // init
+void gravity(){
+    
+    // 1. 중력이 작용할 클러스터를 찾음
+    if(!findCluster()) return;
+    for(auto p : cluster)
+        map[p.y][p.x] = '.';
 
-    vector<pair<int, int> > v;
-    for (int d = 0; d < 4; d++){
-        int nr = r + dy[d];
-        int nc = c + dx[d];
-        if(nr<1 || nr>R || nc<1 || nc>C || !map[nr][nc]) continue;
-        v.push_back({nr, nc});
-    }
-
-    for (int i = 1; i <= R; i++){
-        for (int j = 1; j <= C; j++) tmpMap[i][j] = map[i][j];
-    }
-
-    for (int i = 0; i < (int) v.size(); i++){
-        int y = v[i].first, x = v[i].second;
-        if(!visited[y][x]) {
-            find_clust_and_point(y, x); // 클러스터와 기준점을 찾음
-            int cnt = get_need_cnt();
-            while(!need_move.empty()){
-                r = need_move.top().first;
-                c = need_move.top().second;
-                need_move.pop();
-                tmpMap[r][c] = false;
-                tmpMap[r + cnt][c] = true;
+    // 2. 중력 작용 가능한 cnt를 찾음 (몇칸 떨어질 수 있는지)
+    int cnt = 0;
+    bool iscontinue = true;
+    while (iscontinue){
+        cnt++;
+        for(auto p : cluster){
+            if(p.y+cnt>=R || map[p.y+cnt][p.x]=='x') {
+                iscontinue = false;
+                cnt--;
+                break;
             }
         }
     }
 
-    for (int i = 1; i <= R; i++){
-        for (int j = 1; j <= C; j++) map[i][j] = tmpMap[i][j];
-    }
+    // 3. 중력 작용
+    for(auto p : cluster)
+        map[p.y+cnt][p.x] = 'x';
 }
 
-void solution(){
-    cin >> N;
+void solve(){
+    int h, turn = 0; // 창영(0), 상근(1)
+    while (N--){
+        cin >> h;
 
-    int col, row;
-    for (int i = 1; i <= N; i++){
-        cin >> row; row = R-row+1;
-        col = find_col(i, row);
-        if(col==-1) continue; // 미네랄이 없는 경우
-        map[row][col] = false; // 미네랄 파괴
-        gravity(row, col); // 중력 작용
+        // 1. 막대를 던짐
+        throwStick(R-h, turn);
+
+        // 2. 중력 작용
+        gravity();
+
+        // 3. 턴 변경
+        turn = 1 - turn;
     }
 }
 
 void output(){
-    for (int i = 1; i <= R; i++){
-        for (int j = 1; j <= C; j++)
-            map[i][j] ? cout << "x" : cout << ".";
-        cout << "\n";
+    for (int i = 0; i < R; i++){
+        for (int j = 0; j < C; j++)
+            cout << map[i][j];
+        cout << " \n";
     }
 }
 
 int main(){
     ios_base::sync_with_stdio(0); cin.tie(0);
     input();
-    solution();
+    solve();
     output();
 }
