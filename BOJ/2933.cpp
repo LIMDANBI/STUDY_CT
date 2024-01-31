@@ -1,7 +1,6 @@
 #include<iostream>
 #include<cstring>
 #include<vector>
-#include<queue>
 #define MAX 101
 using namespace std;
 
@@ -137,7 +136,7 @@ void output(){
     for (int i = 0; i < R; i++){
         for (int j = 0; j < C; j++)
             cout << map[i][j];
-        cout << " \n";
+        cout << "\n";
     }
 }
 
