@@ -31,7 +31,7 @@ void solve(int dest){
     vtimes[0] = 0;
     q.push({0, L});
 
-    // 3. BFS
+    // 2. BFS
     while (!q.empty()){
         int prv = q.front().prv;
         int remain = q.front().remain;
@@ -56,25 +56,27 @@ void solve(int dest){
 }
 
 void output(int dest){
-    if(vtimes[dest] == 0) cout << 0;
-    else{
-        // 1. 총 정비 시간
-        cout << vtimes[dest] << "\n";
-
-        // 방문한 정비소 번호 역 추적하기
-        int cur = dest;
-        deque<int> path;
-        while(pnum[cur]){
-            path.push_front(pnum[cur]);
-            cur = pnum[cur];
-        }
-
-        // 2. 방문하는 정비소의 개수
-        cout << (int)path.size() << "\n";
-
-        // 3. 방문한 정비소 번호
-        for(auto n : path) cout << n << " ";
+    if(vtimes[dest] == 0) {
+        cout << 0;
+        return ;
     }
+    
+    // 1. 총 정비 시간
+    cout << vtimes[dest] << "\n";
+
+    // 방문한 정비소 번호 역 추적하기
+    int cur = dest;
+    deque<int> path;
+    while(pnum[cur]){
+        path.push_front(pnum[cur]);
+        cur = pnum[cur];
+    }
+
+    // 2. 방문하는 정비소의 개수
+    cout << (int)path.size() << "\n";
+
+    // 3. 방문한 정비소 번호
+    for(auto n : path) cout << n << " ";
 }
 
 int main(){
