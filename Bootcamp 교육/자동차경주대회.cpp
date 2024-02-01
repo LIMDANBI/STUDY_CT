@@ -56,6 +56,8 @@ void solve(int dest){
 }
 
 void output(int dest){
+
+    // 정비할 필요가 없는 경우
     if(vtimes[dest] == 0) {
         cout << 0;
         return ;
