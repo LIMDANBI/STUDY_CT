@@ -2,7 +2,7 @@
 #include<deque>
 #include<queue>
 #define MAX 105
-#define INF 1e9
+#define INF 1e18
 using namespace std;
 
 struct DATA{int prv, remain;};
@@ -12,7 +12,7 @@ int N; // 정비소 개수
 int pnum[MAX]; // 이전 정비소 번호
 int dist[MAX]; // 정비소사이거리
 int times[MAX]; // 정비시간
-int vtimes[MAX]; // 총 정비 시간
+long long vtimes[MAX]; // 총 정비 시간
 
 void init(){
     for(int i=0; i<MAX; i++) vtimes[i] = INF;
@@ -42,9 +42,9 @@ void solve(int dest){
             cumul += dist[nxt];
             if(remain < cumul) break; // 해당 정비소에 도착할 수 없는 경우
             
-            int prvTime = vtimes[nxt];
-            int newTime = vtimes[prv] + times[nxt];
-            int newRemain = remain - cumul;
+            long long prvTime = vtimes[nxt];
+            long long newTime = vtimes[prv] + times[nxt];
+            long long newRemain = remain - cumul;
 
             if(newTime < prvTime){ // 더 작은 시간으로 도착할 수 있는 경우
                 pnum[nxt] = prv;
@@ -57,12 +57,6 @@ void solve(int dest){
 
 void output(int dest){
 
-    // 정비할 필요가 없는 경우
-    if(vtimes[dest] == 0) {
-        cout << 0;
-        return ;
-    }
-    
     // 1. 총 정비 시간
     cout << vtimes[dest] << "\n";
 
