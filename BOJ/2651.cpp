@@ -31,7 +31,7 @@ void solve(int dest){
     vtimes[0] = 0;
     q.push({0, L});
 
-    // 2. BFS
+    // 2. 다익스트라
     while (!q.empty()){
         int prv = q.front().prv;
         int remain = q.front().remain;
