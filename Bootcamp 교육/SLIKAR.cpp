@@ -6,7 +6,7 @@
 using namespace std;
 
 struct POS{int y, x;};
-queue<POS> waters;
+queue<POS> waters, painter;
 
 int R, C, sr, sc;
 char map[MAX][MAX];
@@ -18,7 +18,10 @@ void init(){
     for(int i=0; i<MAX; i++){
         for(int j=0; j<MAX; j++) rtime[i][j] = -1;
     }
-    while(!waters.empty()) waters.pop();
+
+    // 홍수, 화가 초기화
+    waters = {};
+    painter = {};
 }
 
 void input(){
@@ -65,35 +68,39 @@ void print_water() {
 string bfs(){
 
     // 1. 초기값 처리
-    queue<POS> q;
-    q.push({sr, sc});
     rtime[sr][sc] = 0;
+    painter.push({sr, sc});
 
     // 2. bfs
     int nt = 0;
-    while (!q.empty()){
-        int y = q.front().y;
-        int x = q.front().x;
-        q.pop();
-
-        // 바버의 굴로 도망치는 데 성공한 경우
-        if(map[y][x] == 'D') return to_string(rtime[y][x]);
+    while (!painter.empty()){
         
-        // 홍수 이동 (시간 마다)
-        if(nt == rtime[y][x]){
-            moveWater();
-            nt++;
-        }
+        // 홍수 이동
+        moveWater();
 
         // 화가 이동
-        for(int d=0; d<4; d++){
-            int ny = y+dy[d];
-            int nx = x+dx[d];
-            if(ny<0 || ny>=R || nx<0 || nx>=C) continue; // 범위를 벗어나는 경우
-            if(map[ny][nx]=='X' || map[ny][nx]=='*' || rtime[ny][nx]>=0) continue; // 바위, 홍수, 이미 방문
-            rtime[ny][nx] = rtime[y][x] + 1;
-            q.push({ny, nx});
+        int size = painter.size();
+
+        while(size--){
+            int y = painter.front().y;
+            int x = painter.front().x;
+            painter.pop();
+
+            // 바버의 굴로 도망치는 데 성공한 경우
+            if(map[y][x] == 'D') return to_string(nt);
+
+            for(int d=0; d<4; d++){
+                int ny = y+dy[d];
+                int nx = x+dx[d];
+                if(ny<0 || ny>=R || nx<0 || nx>=C) continue; // 범위를 벗어나는 경우
+                if(map[ny][nx]=='X' || map[ny][nx]=='*' || rtime[ny][nx]>=0) continue; // 바위, 홍수, 이미 방문
+                rtime[ny][nx] = rtime[y][x] + 1;
+                painter.push({ny, nx});
+            }
         }
+
+        // 시간 증가
+        nt++;
     }
 
     // 비버의 굴로 도망칠 수 없는 경우
