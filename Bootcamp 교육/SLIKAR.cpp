@@ -1,4 +1,5 @@
 #include<iostream>
+#include<cstring>
 #include<string>
 #include<vector>
 #include<queue>
@@ -10,14 +11,14 @@ queue<POS> waters, painter;
 
 int R, C, sr, sc;
 char map[MAX][MAX];
-int rtime[MAX][MAX];
+bool visited[MAX][MAX];
 int dy[] = {-1, 1, 0, 0};
 int dx[] = {0, 0, -1, 1};
 
 void init(){
-    for(int i=0; i<MAX; i++){
-        for(int j=0; j<MAX; j++) rtime[i][j] = -1;
-    }
+
+    // 방문 배열 초기화
+    memset(visited, false, sizeof(visited));
 
     // 홍수, 화가 초기화
     waters = {};
@@ -68,8 +69,8 @@ void print_water() {
 string bfs(){
 
     // 1. 초기값 처리
-    rtime[sr][sc] = 0;
     painter.push({sr, sc});
+    visited[sr][sc] = true;
 
     // 2. bfs
     int nt = 0;
@@ -93,9 +94,9 @@ string bfs(){
                 int ny = y+dy[d];
                 int nx = x+dx[d];
                 if(ny<0 || ny>=R || nx<0 || nx>=C) continue; // 범위를 벗어나는 경우
-                if(map[ny][nx]=='X' || map[ny][nx]=='*' || rtime[ny][nx]>=0) continue; // 바위, 홍수, 이미 방문
-                rtime[ny][nx] = rtime[y][x] + 1;
+                if(map[ny][nx]=='X' || map[ny][nx]=='*' || visited[ny][nx]) continue; // 바위, 홍수, 이미 방문
                 painter.push({ny, nx});
+                visited[ny][nx] = true;
             }
         }
 
