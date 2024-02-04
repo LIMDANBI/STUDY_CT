@@ -11,21 +11,21 @@ int id[MAX]; // 제품 ID
 int cnt[KIND]; // id별 제품 개수
 int order[MAX];
 bool used[MAX];
+int psum[KIND][MAX]; // 구간합
 
 void input(){
 	cin >> N >> M;
-	for(int i = 1; i <= N; i++) {
-        cin >> id[i];
-        cnt[id[i]]++;
-    }
+	for(int i = 1; i <= N; i++)  cin >> id[i];
 }
 
-int check(int s, int m){
-    int res = 0;
-    for (int i = 0; i < cnt[m]; i++){
-        if(id[s+i] != m) res++;
+void make_psum(){
+    for (int m = 1; m <= N; m++) psum[id[m]][m] = 1;
+    for (int m = 1; m <= M; m++){ // MAX 9
+        for (int n = 2; n <= N; n++){ // MAX 1e5
+            psum[m][n] += psum[m][n - 1];
+        }
+        cnt[m] = psum[m][N];
     }
-    return res;
 }
 
 void permu(int idx, int mcnt, int start){
@@ -38,7 +38,8 @@ void permu(int idx, int mcnt, int start){
         if(used[m]) continue;
         used[m] = true;
         order[idx] = m;
-        permu(idx + 1, mcnt+check(start, m), start+cnt[m]);
+        int will = cnt[m] - (psum[m][start + cnt[m] - 1] - psum[m][start - 1]);
+        permu(idx + 1, mcnt + will, start + cnt[m]);
         used[m] = false;
     }
 }
@@ -48,10 +49,13 @@ void solve(){
     // 1. 초기화
     ans = INF;
 
-    // 2. 완전 탐색 (순열) + 가지치기
+    // 2. 구간합 구하기
+    make_psum();
+
+    // 3. 완전 탐색 (순열) + 가지치기
     permu(0, 0, 1);
 
-    // 3. 정답 출력
+    // 4. 정답 출력
     cout << ans;
 }
 
