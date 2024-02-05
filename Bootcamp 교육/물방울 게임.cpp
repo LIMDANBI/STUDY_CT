@@ -18,7 +18,7 @@ void simul(int cur, int idx, int skill){
     if(ans <= skill) return; // 가지치기
 
     // 1. 먹을 수 있을 때 까지
-    while(W[idx]<cur && idx<N){
+    while(idx<N && W[idx]<cur){
         cur+=W[idx];
         idx++;
     }
