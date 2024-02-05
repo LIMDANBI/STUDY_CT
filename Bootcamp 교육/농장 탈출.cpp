@@ -32,7 +32,6 @@ void dfs(int n, int idx, int cnt, int sum){
     // 3. 소 선택 (조합)
     for(int i=idx; i<N; i++){
         if(check(sum, W[i])) dfs(n+1, i+1, cnt+1, sum+W[i]);
-        else dfs(n+1, i+1, cnt, sum);
     }
 }
 
