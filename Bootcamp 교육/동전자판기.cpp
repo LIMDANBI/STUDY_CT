@@ -15,16 +15,12 @@ void input(){
 	}
 }
 
-void make_psum(){
-    for(int i=5; i>=0; i--){
-        psum[i] = psum[i+1] + (coin[i]*A[i]);
-    }
-}
-
 void solve(){
 
     // 1. 누적합 만들기
-    make_psum();
+    for(int i=5; i>=0; i--){
+        psum[i] = psum[i+1] + (coin[i]*A[i]);
+    }
 
     // 2. 그리디 
     int send = 0;
