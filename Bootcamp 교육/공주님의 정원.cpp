@@ -33,7 +33,7 @@ void solve(){
     int last = 301;
     for(int i=0; i<N && last<=1130; i++){
         int maxLast = 0;
-        for(int j=i+1; j<N; j++){
+        for(int j=i; j<N; j++){
             if(flower[j].open <= last){
                 maxLast = max(flower[j].close, maxLast);
             }
