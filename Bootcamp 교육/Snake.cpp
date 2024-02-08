@@ -73,12 +73,8 @@ int solve(){
 
         // (2) 뱀의 회전
         if(path.front().t == t){
-            if(path.front().c == 'D'){ // 오른쪽 90도
-                d++; if(d>3) d=0;
-            }
-            else{ // 왼쪽 90도
-                d--; if(d<0) d=3;
-            }
+            if(path.front().c == 'D') d=(d+1)%4; // 오른쪽 90도
+            else d=(d+3)%4; // 왼쪽 90도
             path.pop();
         }
     }
