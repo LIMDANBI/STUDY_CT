@@ -17,6 +17,7 @@ bool check(int val){
     
     int cur=0, idx=0, cnt=0;
 
+    // 세워진 휴게소 확인
     while (idx < N){
         while(cur+val < restArea[idx]){
             cur += val;
@@ -25,6 +26,7 @@ bool check(int val){
         cur = restArea[idx++];
     }
 
+    // 고속도로 끝까지 확인
     while(cur+val < L){
         cur+=val;
         cnt++;
