@@ -13,6 +13,7 @@ struct GROUP{
 
 int N, K;
 int H[MAX];
+int gap[MAX];
 GROUP D[MAX];
 
 void input(){
@@ -49,8 +50,27 @@ void solve(){
     cout << ans;
 }
 
+void solve2(){ // solve1의 여집합
+
+    // 1. 원생 간의 차이 구하기
+    for(int i=1; i<N; i++){
+        gap[i-1] = H[i]-H[i-1];
+    }
+
+    // 2. 차이 오름차순 정렬
+    sort(gap, gap+N-1);
+
+    // 3. K개의 조로 나누었을 때, 티셔츠 만드는 비용
+    int ans = 0;
+    for(int i=0; i<N-K; i++) ans += gap[i];
+    
+    // 4. 티셔츠를 만드는 최소 비용 출력
+    cout << ans;
+}
+
 int main(){
     ios_base::sync_with_stdio(0); cin.tie(0);
     input();
-    solve();
+    // solve();
+    solve2();
 }
