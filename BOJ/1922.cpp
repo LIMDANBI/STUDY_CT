@@ -39,11 +39,10 @@ void solve(){
 
     int ans=0, cnt=0;
 
-    for(int i=1; i<=N; i++){
-        root[i] = i;
-    }
+    // 1. Union-Find를 위한 초기화
+    for(int i=1; i<=N; i++) root[i] = i;
 
-    // MST 만들기
+    // 2. MST 만들기
     while(cnt!=N-1){
         int a = pq.top().a;
         int b = pq.top().b;
