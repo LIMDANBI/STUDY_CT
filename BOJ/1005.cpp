@@ -50,7 +50,7 @@ void solve(){
         int cur = q.front();
         q.pop();
 
-        if(cur == W){
+        if(cur == W){ // 백준이가 목표한 건물
             cout << cost[W] << "\n";
             return;
         }
