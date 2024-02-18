@@ -8,7 +8,7 @@ int N; // 건물의 개수
 int K; // 건물간의 건설순서 규칙의 총 개수
 int W; // 백준이가 승리하기 위해 건설해야 할 건물의 번호
 int D[MAX]; // 각 건물당 건설에 걸리는 시간
-int cost[MAX]; // 순서에 따른 건물 건걸에 걸리는 시간
+int cost[MAX]; // 순서에 따른 건물 건설에 걸리는 시간
 int indegree[MAX]; // 다른 노드로부터 들어오는 간선의 개수
 vector<int> v[MAX]; // 건설 순서
 
