@@ -56,11 +56,11 @@ void solve(){
         }
 
         for(int nxt : v[cur]){
-            if(--indegree[nxt] == 0){
+            if(--indegree[nxt] == 0){ // 건설될 수 있는 경우
                 cost[nxt] = max(cost[cur], cost[nxt]) + D[nxt];
                 q.push(nxt);
             }
-            else{
+            else{ // 건설될 수 없는 경우, 이미 건설된 경우
                 cost[nxt] = max(cost[nxt], cost[cur]);
             }
         }
