@@ -24,16 +24,13 @@ bool check(int y, int x){
 
     // 상하좌우 대각선 확인
     for (int d = 0; d < 8; d++){
-        
         bool res = true;
         int ny = y, nx = x;
-
         for (int i = 0; i < ssize; i++){
             if(ny<0 || nx>=N || nx<0 || nx>=M) res = false;
             if(map[ny][nx]!=S[i]) res = false;
             ny += dy[d]; nx += dx[d];
         }
-
         if(res) return true;
     }
     return false;
