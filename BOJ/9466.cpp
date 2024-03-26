@@ -4,7 +4,6 @@
 using namespace std;
 
 int N;
-int team;
 int num[MAX];
 int cnt[MAX];
 int visited[MAX];
@@ -20,32 +19,28 @@ void input(){
         cin >> num[i];
 }
 
-void get_team(int n, int t, int d){
+int get_team(int n, int t, int d){
     visited[n] = t;
     cnt[n] = d;
 
     int nxt = num[n];
 
     // cycle을 이룬 경우
-    if(visited[nxt] == t){
-        team = d - cnt[nxt] + 1;
-        return ;
-    }
+    if(visited[nxt] == t)
+        return d - cnt[nxt] + 1;
 
-    // 이미 방문한 경우
+    // 이전 탐색에서 이미 방문한 경우
     if(visited[nxt])
-        return ;
+        return 0;
 
-    get_team(nxt, t, d + 1);
+    return get_team(nxt, t, d + 1);
 }
 
 void solve(){
     int ans = N, turn=1;
     for (int n = 1; n <= N; n++){
         if(visited[n]) continue; // 이미 방문한 경우
-        get_team(n, turn++, 1);
-        ans -= team;
-        team = 0;
+        ans -= get_team(n, turn++, 1);
     }
     cout << ans << "\n";
 }
